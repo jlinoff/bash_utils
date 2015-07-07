@@ -55,12 +55,14 @@
 # The message format can be defined by setting utilsMsgPrefixFormat
 # using the available field types. The field types available are:
 #
-#   %date  current date: %Y-%m-%d
-#   %file  the caller file name
-#   %func  the caller function name
-#   %line  the caller line number
-#   %time  current time: %H:%M:%S
-#   %type  message type: INFO, ERROR, WARNING, DEBUG
+#   %date     current date: %Y-%m-%d
+#   %datetime timestamp %Y-%m-%d %H:%M%S
+#   %file     the caller file name
+#   %filebase the file base name
+#   %func     the caller function name
+#   %line     the caller line number
+#   %time     current time: %H:%M:%S
+#   %type     message type: INFO, ERROR, WARNING, DEBUG
 #
 # The default setting is:
 #
@@ -142,6 +144,7 @@ function utilsMsgGetPrefix() {
     local Lineno=$(caller $Level | awk '{print $1;}')
     local Funcname=$(caller $Level | awk '{print $2;}')
     local Filename=$(caller $Level | awk '{print $3;}')
+    local BaseFilename=$(basename "$Filename")
 
     # Get date/time stamps.
     local Date=$(date +'%Y-%m-%d')
@@ -151,6 +154,7 @@ function utilsMsgGetPrefix() {
     # Define the prefix.
     local Prefix=$(sed \
         -e "s/%line/$Lineno/g" \
+        -e "s@%filebase@$BaseFilename@" \
         -e "s@%file@$Filename@" \
         -e "s/%func/$Funcname/" \
         -e "s/%datetime/$Datetime/" \
