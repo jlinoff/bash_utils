@@ -84,5 +84,5 @@ using the available field types. The field types available are:
 
 The default setting is:
 ```
-utilsMsgPrefixFormat='%date %time %type %filebase %line '
+utilsMsgPrefixFormat='%date %time %type %file %line '
 ```
