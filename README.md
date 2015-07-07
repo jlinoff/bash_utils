@@ -71,16 +71,18 @@ Key 0=disabled, 1=enabled
 The message format can be defined by setting utilsMsgPrefixFormat
 using the available field types. The field types available are:
 
-| Field | Description                               |
-| ----- | ----------------------------------------- |
-| %date | current date: %Y-%m-%d                    |
-| %file | the caller file name                      |
-| %func | the caller function name                  |
-| %line | the caller line number                    |
-| %time | current time: %H:%M:%S                    |
-| %type | message type: INFO, ERROR, WARNING, DEBUG |
+| Field     | Description                               |
+| --------- | ----------------------------------------- |
+| %date     | current date: %Y-%m-%d                    |
+| %datetime | timestamp: %Y-%m-%d %H:%M:%S              |
+| %file     | the caller file name                      |
+| %filebase | the file base name                        |
+| %func     | the caller function name                  |
+| %line     | the caller line number                    |
+| %time     | current time: %H:%M:%S                    |
+| %type     | message type: INFO, ERROR, WARNING, DEBUG |
 
 The default setting is:
 ```
-utilsMsgPrefixFormat='%date %time %type %file %line '
+utilsMsgPrefixFormat='%date %time %type %filebase %line '
 ```
