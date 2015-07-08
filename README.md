@@ -1,5 +1,5 @@
 # bash_utils
-Collection of bash functions for handling low level functions like messages, command monitoring and assertions. The source code is useful for learning more about bash programming.
+Collection of bash functions for handling low level functions like messages, command monitoring and assertions that use intropsection to provide source file names and line numbers. The source code is useful for learning more about bash programming.
 
 ## Commands
 
