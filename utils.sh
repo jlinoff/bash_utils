@@ -3,15 +3,16 @@
 # certain low level functions like messages, assertions and command
 # monitoring. The available commands are:
 #
-#   utilsArrayContains  Is element in array.
-#   utilsAssert         Do an assertion test.
-#   utilsDebug          Prints a debug message.
-#   utilsErr            Prints an error message and exits.
-#   utilsErrNoExit      Prints an error message but does not exit.
-#   utilsExec           Execute a command with options for exiting.
-#   utilsInfo           Prints an information message.
-#   utilsMkdirs         Make multiple directories.
-#   utilsWarn           Prints a warning message.
+#   utilsArrayContains           Is element in array.
+#   utilsAssert                  Do an assertion test.
+#   utilsConvertSecondsToHHMMSS  Convert seconds to HH:MM:SS format.
+#   utilsDebug                   Prints a debug message.
+#   utilsErr                     Prints an error message and exits.
+#   utilsErrNoExit               Prints an error message but does not exit.
+#   utilsExec                    Execute a command with options for exiting.
+#   utilsInfo                    Prints an information message.
+#   utilsMkdirs                  Make multiple directories.
+#   utilsWarn                    Prints a warning message.
 #
 # Here are some example usages:
 #
@@ -323,4 +324,27 @@ function utilsArrayContains() {
         [[ "$ArrayElement" == "$Element" ]] && return 0
     done
     return 1
+}
+
+# Convert total seconds to hours, minutes and seconds.
+# Usage:
+#   Str=$(utilsConvertSecondsToHHMMSS 12345)
+#   echo $Str  # s/b 34:17:36
+function utilsConvertSecondsToHHMMSS() {
+    local TotalSeconds="$1"
+
+    # Verify the arg.
+    local Regex='^[0-9]+$'
+    if [[ ! "$TotalSeconds" =~ $Regex ]] ; then
+        echo "$1"
+        return 1
+    fi
+
+    # Convert.
+    local Hours=$(( $TotalSeconds / 3600 ))
+    local Minutes=$(( ( $TotalSeconds % 3600 ) / 60 ))
+    local Seconds=$(( $TotalSeconds % 60 ))
+
+    printf '%02d:%02d:%02d' $Hours $Minutes $Seconds
+    return 0
 }
