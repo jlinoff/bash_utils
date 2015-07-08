@@ -3,17 +3,18 @@ Collection of bash functions for handling low level functions like messages, com
 
 ## Commands
 
-| Command            | Description                                 |
-| ------------------ | ------------------------------------------- |
-| utilsArrayContains | Is element in array.                        |
-| utilsAssert        | Do an assertion test.                       |
-| utilsDebug         | Prints a debug message.                     |
-| utilsErr           | Prints an error message and exits.          |
-| utilsErrNoExit     | Prints an error message but does not exit.  |
-| utilsExec          | Execute a command with options for exiting. |
-| utilsInfo          | Prints an information message.              |
-| utilsMkdirs        | Make multiple directories.                  |
-| utilsWarn          | Prints a warning message.                   |
+| Command                     | Description                                 |
+| --------------------------- | ------------------------------------------- |
+| utilsArrayContains          | Is element in array.                        |
+| utilsAssert                 | Do an assertion test.                       |
+| utilsConvertSecondsToHHMMSS | Convert total sectonds to HH:MM:SS          |
+| utilsDebug                  | Prints a debug message.                     |
+| utilsErr                    | Prints an error message and exits.          |
+| utilsErrNoExit              | Prints an error message but does not exit.  |
+| utilsExec                   | Execute a command with options for exiting. |
+| utilsInfo                   | Prints an information message.              |
+| utilsMkdirs                 | Make multiple directories.                  |
+| utilsWarn                   | Prints a warning message.                   |
 
 ## Usage Examples
 This shows how to use some of these functions.
@@ -40,6 +41,9 @@ utilsAssert "(( ${#Files[@]} > 3 ))"
 if ! utilsArrayContains Files "foo.txt" ; then
   utilsErr "Expected file 'foo.txt' does not exist."
 fi
+
+Str=$(utilsConvertSecondsToHHMMSS 12345)
+echo $Str    # s/b 34:17:36
 ```
 
 utilsExec is especially useful to scripts where you need to check
