@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # This is a collection of general purpose bash functions for handling
 # certain low level functions like messages, assertions and command
@@ -9,9 +10,15 @@
 #   utilsDebug                   Prints a debug message.
 #   utilsErr                     Prints an error message and exits.
 #   utilsErrNoExit               Prints an error message but does not exit.
-#   utilsExec                    Execute a command with options for exiting.
+#   utilsExec                    Execute a command with options for exiting on error.
+#   utilsExecNoExit              Execute a command with options, do not exit.
 #   utilsInfo                    Prints an information message.
+#   utilsMax                     Get the maximum value.
+#   utilsMin                     Get the minimum value.
 #   utilsMkdirs                  Make multiple directories.
+#   utilsStackPush               Push onto a stack.
+#   utilsStackTos                Report the top of stack.
+#   utilsStackPop                Pop off the top of the stack.
 #   utilsWarn                    Prints a warning message.
 #
 # Here are some example usages:
@@ -23,13 +30,12 @@
 #   utilsAssert "(( $num1 < $num2 ))"  # exits if $num1 >= $num2
 #
 #   utilsExec ls -1
-#
-#   utilsExecNoExit=0  # don't exit if the command fails.
-#   utilsExec mount this_device on_that_dir
-#   utilsExecNoExit=1
+#   utilsExecNoExit e2fsck -p -f /dev/mapper/${LOOP_DEVICE}p1
+#   utilsAssert "(( $? == 0 || $? == 1 ))"
 #
 # utilsExec is especially useful to scripts where you need to check
-# the resuls of some commands and exit if they fail.
+# the resuls of some commands and exit if they fail, and you need to
+# know where in the source code that the command was executed.
 #
 #   utilsExec mount this on_that  # this must work
 #
@@ -42,7 +48,7 @@
 #   utilsErrEnable        1  enable/disable utilsErr (ERROR) messages
 #   utilsErrExitCode      1  default utilsErr exit code
 #   utilsErrNoExitEnable  1  enable/disable utilsErrNoExit (ERROR) messages
-#   utilsExecExitOnError  1  enable/disable exit on error for utilsExec
+#   utilsExecExitOnError  1  enable/disable exit on error for utilsExec (same as utilsExecNoExit)
 #   utilsExecCmd          1  enable/disable utilsExec cmd reporting
 #   utilsExecPwd          0  enable/disable utilsExec pwd reporting
 #   utilsExecTime         0  enable/disable utilsExec cmd timing
@@ -67,7 +73,7 @@
 #
 # The default setting is:
 #
-#   utilsMsgPrefixFormat='%date %time %type %file %line '
+#   utilsMsgPrefixFormat='%date %time %type %filebase %line '
 #
 
 # LICENSE
@@ -107,7 +113,7 @@ utilsInfoEnable=1       # enable/disable utilsInfo (INFO) messages
 utilsMsgEnable=1        # enable/disable all messages
 utilsWarnEnable=1       # enable/disable utilsWarn (WARNING) messages
 
-utilsMsgPrefixFormat='%date %time %type %file %line '
+utilsMsgPrefixFormat='%date %time %type %filebase %line '
 
 # Check the version number.
 function utilsCheckVersion() {
@@ -225,7 +231,7 @@ function utilsDebug() {
     utilsMsg DEBUG "$@"
 }
 
-# Execute a command, check the exit status.
+# Execute a command, check the exit status and exit on error.
 # Make sure that arguments are properly quoted, if necessary.
 # if utilsExecTime is 1, then time the command.
 # if utilsExecCmd is 1, then print the command.
@@ -282,6 +288,61 @@ function utilsExec() {
             utilsWarn "Command failed with exit status ${Status}: $Cmd"
         fi
     fi
+    return $Status
+}
+
+# Execute a command, check the exit status, do not exit on error.
+# Make sure that arguments are properly quoted, if necessary.
+# if utilsExecTime is 1, then time the command.
+# if utilsExecCmd is 1, then print the command.
+# if utilsExecPwd is 1, then print the current directory.
+# if utilsExecStatus is 1, then print the command exit status.
+# Usage:
+#    utilsExecNoExit run this command 'with these' arguments
+#    utilsAssert (( $? == 0 && $? == 1 ))
+function utilsExecNoExit() {
+    # Quote arguments that need quoting.
+    local Cmd=''
+    local Prog=''
+    for Arg in "$@" ; do
+        if [[ "$Prog" == "" ]] ; then
+            Prog="$Arg"
+        fi
+        if grep -q '[[:space:]]' <<< "$Arg" ; then
+            Cmd="$Cmd \"$Arg\""
+        else
+            Cmd="$Cmd $Arg"
+        fi
+    done
+    Cmd=${Cmd:1}  # strip off the leading space
+
+    # Print the cmd information.
+    if (( $utilsExecCmd )) ; then
+        utilsInfo "Cmd: $Cmd"
+    fi
+    if (( $utilsExecPwd )) ; then
+        utilsInfo "Cmd Pwd: $(pwd)"
+    fi
+
+    # Execute the command and capture the status.
+    if (( $utilsExecTime )) ; then
+        local ProgPath=$(type -p "$Prog")  # look for bash built-ins
+        if [[ "$ProgPath" == "" ]] ; then
+            eval $Cmd
+        else
+            # This is not a built in bash command, add the timer.
+            local Prefix="$(utilsMsgGetPrefix 'INFO')"
+            local TimeFormat="${Prefix}Cmd Time: elapsed=%E, user=%U, sys=%S, mem=%M, in=%I, out=%O"
+            eval "/usr/bin/time -f '$TimeFormat' $Cmd"
+        fi
+    else
+        eval $Cmd
+    fi
+    local Status=$?
+    if (( $utilsExecStatus )) ; then
+        utilsInfo "Cmd Status: $Status"
+    fi
+    
     return $Status
 }
 
@@ -346,5 +407,87 @@ function utilsConvertSecondsToHHMMSS() {
     local Seconds=$(( $TotalSeconds % 60 ))
 
     printf '%02d:%02d:%02d' $Hours $Minutes $Seconds
+    return 0
+}
+
+# Report the max integer in the arg list.
+# Usage:
+#    Max=$(utilsMax 1 2 3 4 5 6)
+#    echo $Max     # 6
+function utilsMax() {
+    local Max=$1
+    shift
+    for Num in "$@" ; do
+        #Max=$( (( $Max > $Num )) && echo $Max || echo $Num )
+        if (( $Num > $Max )) ; then
+            Max=$Num
+        fi
+    done
+    echo $Max
+    return 0
+}
+
+# Report the min integer in the arg list.
+# Usage:
+#    Min=$(utilsMin 1 2 3 4 5 6)
+#    echo $Min     # 1
+function utilsMin() {
+    local Min=$1
+    shift
+    for Num in "$@" ; do
+        #Min=$( (( $Min < $Num )) && echo $Min || echo $Num )
+        if (( $Num < $Min )) ; then
+            Min=$Num
+        fi
+    done
+    echo $Min
+    return 0
+}
+
+# Push onto a stack.
+# Usage:
+#   MyStack=()
+#   utilsStackPush MyStack "value"
+function utilsStackPush() {
+    local StackVarName="$1"
+    shift
+    for Elem in "$@" ; do
+        eval "$StackVarName+=('$Elem')"
+    done
+}
+
+# Pop off of a stack.
+# Usage:
+#   MyStack=()
+#   utilsStackPush MyStack 1 2 3
+#   utilsStackPop MyStack Top
+#   echo $Top             # == 3
+#   echo ${#MyStack[@]}   # == 2
+function utilsStackPop() {
+    local StackVarName="$1"
+    local ResultVarName="$2"
+    local Size=$(eval echo "\${#${StackVarName}[@]}")
+    if (( $Size > 0 )) ; then
+        local Last=$(( $Size - 1 ))
+        local Top=$(eval echo "\${${StackVarName}[${Last}]}")
+        eval unset "${StackVarName}[${Last}]"
+        eval "${ResultVarName}=${Top}"
+    fi
+    return 0
+}
+
+# Get the value at the top of the stack.
+# Usage:
+#   MyStack=()
+#   utilsStackPush MyStack 1 2 3
+#   Elem=$(utilsStackTos MyStack)
+function utilsStackTos() {
+    local StackVarName="$1"
+    local Size=$(eval echo "\${#${StackVarName}[@]}")
+    if (( $Size > 0 )) ; then
+        local Last=$(( $Size - 1 ))
+        local Top=$(eval echo "\${${StackVarName}[$Last]}")
+        echo $Top
+    fi
     return 0
 }
