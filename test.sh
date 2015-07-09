@@ -2,7 +2,7 @@
 #
 # Test utils.sh.
 #
-source $(dirname -- $0)/utils.sh
+source $(dirname $0)/utils.sh
 
 # Test debug messages.
 utilsDebug 'Test debug'
@@ -73,3 +73,52 @@ for i in "foo" "foobar" "spambar" "spam" ; do
         echo "A1 does not contain $i"
     fi
 done
+
+# Test the elapsed time function.
+Str=$(utilsConvertSecondsToHHMMSS 123456)
+utilsInfo "Status=$?"
+utilsInfo "123456 = $Str"
+
+Str=$(utilsConvertSecondsToHHMMSS 123456x)
+utilsInfo "Status=$?"
+utilsInfo "123456x = $Str"
+
+# Test max.
+Max=$(utilsMax 1 2 3 4 5 6)
+utilsInfo "Max=$Max"
+utilsAssert "(( $Max == 6 ))"
+
+# Test min.
+Min=$(utilsMin 1 2 3 4 5 6)
+utilsInfo "Min=$Min"
+utilsAssert "(( $Min == 1 ))"
+
+# utilsExecNoExit
+function ex() {
+    echo "return code: $1"
+    return $1
+}
+utilsExecNoExit ex 23
+utilsInfo "Exit status = $?"
+#utilsExec ex 23  # will get a command failed error
+
+utilsExecNoExit ex 1
+utilsAssert "(( $? == 0 || $? == 1 || $? == 2 ))"
+
+utilsExecNoExit echo "foo bar" '|' sed -e "'s/bar/spam/'"
+
+# Stack tests.
+MyStack=()
+utilsStackPush MyStack 1 2 3
+utilsInfo "MyStack = ${#MyStack[@]} elements"
+echo "MyStack=(${MyStack[@]})"
+
+Top=$(utilsStackTos MyStack)
+utilsInfo "Top=$Top"
+utilsInfo "MyStack = ${#MyStack[@]} elements"
+echo "MyStack=(${MyStack[@]})"
+
+utilsStackPop MyStack Top
+utilsInfo "Top=$Top"
+utilsInfo "MyStack = ${#MyStack[@]} elements"
+echo "MyStack=(${MyStack[@]})"
