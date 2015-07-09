@@ -93,6 +93,10 @@ Min=$(utilsMin 1 2 3 4 5 6)
 utilsInfo "Min=$Min"
 utilsAssert "(( $Min == 1 ))"
 
+Array=(1 2 3 4 5 6 7)
+utilsInfo "Min=$(utilsMin ${Array[@]})"
+utilsInfo "Max=$(utilsMax ${Array[@]})"
+
 # utilsExecNoExit
 function ex() {
     echo "return code: $1"
@@ -122,3 +126,9 @@ utilsStackPop MyStack Top
 utilsInfo "Top=$Top"
 utilsInfo "MyStack = ${#MyStack[@]} elements"
 echo "MyStack=(${MyStack[@]})"
+
+MyStack=(1 2 3 4)
+while (( ${#MyStack[@]} )) ; do
+    utilsStackPop MyStack MyTop
+    utilsInfo "$MyTop"
+done
