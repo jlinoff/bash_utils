@@ -101,6 +101,34 @@ using the available field types. The field types available are:
 | %type     | message type: INFO, ERROR, WARNING, DEBUG |
 
 The default setting is:
+```bash
+utilsMsgPrefixFormat='%date %time %type %filebase %line '
 ```
+
+Here are some examples of different settings.
+
+```bash
+#!/bin/bash
+# This file name is test123.sh
+source ~/etc/utils.sh
+
+# Default format specified explicitly.
+utilsMsgPrefixFormat='%date %time %type %filebase %line '
+utilsInfo "test message"
+# 2015-07-09 09:52:55.478262680 INFO test123.sh 628 test message
+
+# Useful format for a single script (remove the file name).
+utilsMsgPrefixFormat='%date %time %type %line '
+utilsInfo "test message"
+# 2015-07-09 09:52:55.478262680 INFO 628 test message
+
+# Useful format for scrips that source all sorts of different things.
 utilsMsgPrefixFormat='%date %time %type %file %line '
+utilsInfo "test message"
+# 2015-07-09 09:52:55.478262680 INFO /home/work/test/test123.sh 628 test message
+
+# Another format.
+utilsMsgPrefixFormat='[%type] %date : '
+utilsInfo "test message"
+# [INFO] 2015-07-09 : test message
 ```
