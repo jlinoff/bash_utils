@@ -1,54 +1,54 @@
-2015-07-09 09:26:03.963104130 DEBUG test.sh 8 Test debug
-2015-07-09 09:26:03.985700975 DEBUG test.sh 9 Test debug
+2015-07-09 09:42:24.560973576 DEBUG test.sh 8 Test debug
+2015-07-09 09:42:24.596598166 DEBUG test.sh 9 Test debug
                                               second line
-2015-07-09 09:26:04.013341377 INFO test.sh 12 Test info
-2015-07-09 09:26:04.036082291 INFO test.sh 13 Test info
+2015-07-09 09:42:24.633601302 INFO test.sh 12 Test info
+2015-07-09 09:42:24.668149637 INFO test.sh 13 Test info
                                               second line
-2015-07-09 09:26:04.057636458 WARNING test.sh 16 Test warn
-2015-07-09 09:26:04.078009544 WARNING test.sh 17 Test warn
+2015-07-09 09:42:24.692144788 WARNING test.sh 16 Test warn
+2015-07-09 09:42:24.720852751 WARNING test.sh 17 Test warn
                                                  second line
-2015-07-09 09:26:04.102665229 ERROR test.sh 20 Test err
-2015-07-09 09:26:04.127664362 ERROR test.sh 21 Test err
+2015-07-09 09:42:24.756366442 ERROR test.sh 20 Test err
+2015-07-09 09:42:24.790843890 ERROR test.sh 21 Test err
                                                second line
-2015-07-09 09:26:04.152606868 ERROR test.sh 22 Test err - no exit
-2015-07-09 09:26:04.182814069 INFO test.sh 25 Cmd: sleep 1
-2015-07-09 09:26:05.216683307 INFO test.sh 27 Cmd: sleep 1
-2015-07-09 09:26:05.241289738 INFO test.sh 27 Cmd Pwd: /user/jlinoff/work/bash
-2015-07-09 09:26:06.278244310 INFO test.sh 29 Cmd: sleep 1
-2015-07-09 09:26:06.309041626 INFO test.sh 29 Cmd Pwd: /user/jlinoff/work/bash
-2015-07-09 09:26:07.334796943 INFO test.sh 29 Cmd Status: 0
-2015-07-09 09:26:07.356935886 INFO test.sh 31 Cmd: sleep 1
-2015-07-09 09:26:07.377730810 INFO test.sh 31 Cmd Pwd: /user/jlinoff/work/bash
-2015-07-09 09:26:07.396801283 INFO test.sh 31 Cmd Time: elapsed=0:01.00, user=0.00, sys=0.00, mem=2416, in=0, out=0
-2015-07-09 09:26:08.421743371 INFO test.sh 31 Cmd Status: 0
-2015-07-09 09:26:08.463964097 INFO test.sh 34 Cmd: echo "foo bar" | sed -e s/bar/spam/g
-2015-07-09 09:26:08.492959316 INFO test.sh 34 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:24.829624976 ERROR test.sh 22 Test err - no exit
+2015-07-09 09:42:24.882353200 INFO test.sh 25 Cmd: sleep 1
+2015-07-09 09:42:25.961389397 INFO test.sh 27 Cmd: sleep 1
+2015-07-09 09:42:26.042873119 INFO test.sh 27 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:27.120688612 INFO test.sh 29 Cmd: sleep 1
+2015-07-09 09:42:27.177520301 INFO test.sh 29 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:28.241662076 INFO test.sh 29 Cmd Status: 0
+2015-07-09 09:42:28.306691055 INFO test.sh 31 Cmd: sleep 1
+2015-07-09 09:42:28.330174997 INFO test.sh 31 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:28.350817759 INFO test.sh 31 Cmd Time: elapsed=0:01.00, user=0.00, sys=0.00, mem=2400, in=0, out=0
+2015-07-09 09:42:29.387497303 INFO test.sh 31 Cmd Status: 0
+2015-07-09 09:42:29.450239003 INFO test.sh 34 Cmd: echo "foo bar" | sed -e s/bar/spam/g
+2015-07-09 09:42:29.515282025 INFO test.sh 34 Cmd Pwd: /user/jlinoff/work/bash
 foo spam
-2015-07-09 09:26:08.525950983 INFO test.sh 34 Cmd Status: 0
-2015-07-09 09:26:08.554401044 ERROR test.sh 35 Assertion failed: [ -f test_file_exists ].
-2015-07-09 09:26:08.591765718 INFO test.sh 40 Cmd: echo "test data" > /tmp/_utils_test
-2015-07-09 09:26:08.620906090 INFO test.sh 40 Cmd Pwd: /user/jlinoff/work/bash
-2015-07-09 09:26:08.644791027 INFO test.sh 40 Cmd Status: 0
-2015-07-09 09:26:08.672103652 INFO test.sh 41 Cmd: cat /tmp/_utils_test
-2015-07-09 09:26:08.694721693 INFO test.sh 41 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:29.562889866 INFO test.sh 34 Cmd Status: 0
+2015-07-09 09:42:29.595998812 ERROR test.sh 35 Assertion failed: [ -f test_file_exists ].
+2015-07-09 09:42:29.649645753 INFO test.sh 40 Cmd: echo "test data" > /tmp/_utils_test
+2015-07-09 09:42:29.690976778 INFO test.sh 40 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:29.739515682 INFO test.sh 40 Cmd Status: 0
+2015-07-09 09:42:29.795015932 INFO test.sh 41 Cmd: cat /tmp/_utils_test
+2015-07-09 09:42:29.863979485 INFO test.sh 41 Cmd Pwd: /user/jlinoff/work/bash
 test data
-2015-07-09 09:26:08.721127870 INFO test.sh 41 Cmd Time: elapsed=0:00.00, user=0.00, sys=0.00, mem=2352, in=0, out=8
-2015-07-09 09:26:08.749681021 INFO test.sh 41 Cmd Status: 0
-2015-07-09 09:26:08.780854300 INFO test.sh 43 Cmd: rm -f /tmp/_utils_test
-2015-07-09 09:26:08.806266743 INFO test.sh 43 Cmd Pwd: /user/jlinoff/work/bash
-2015-07-09 09:26:08.830931349 INFO test.sh 43 Cmd Time: elapsed=0:00.00, user=0.00, sys=0.00, mem=2480, in=0, out=0
-2015-07-09 09:26:08.855368607 INFO test.sh 43 Cmd Status: 0
-2015-07-09 09:26:08.894282927 ERROR test.sh 44 Assertion failed: [ -f /tmp/_utils_test ].
-2015-07-09 09:26:08.938818072 INFO test.sh 48 Cmd: echo "check quoted" arguments
-2015-07-09 09:26:08.967238907 INFO test.sh 48 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:29.924831976 INFO test.sh 41 Cmd Time: elapsed=0:00.00, user=0.00, sys=0.00, mem=2352, in=0, out=8
+2015-07-09 09:42:29.962959316 INFO test.sh 41 Cmd Status: 0
+2015-07-09 09:42:30.004850664 INFO test.sh 43 Cmd: rm -f /tmp/_utils_test
+2015-07-09 09:42:30.041147861 INFO test.sh 43 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:30.092227560 INFO test.sh 43 Cmd Time: elapsed=0:00.00, user=0.00, sys=0.00, mem=2464, in=0, out=0
+2015-07-09 09:42:30.148840090 INFO test.sh 43 Cmd Status: 0
+2015-07-09 09:42:30.208149551 ERROR test.sh 44 Assertion failed: [ -f /tmp/_utils_test ].
+2015-07-09 09:42:30.280263605 INFO test.sh 48 Cmd: echo "check quoted" arguments
+2015-07-09 09:42:30.331467611 INFO test.sh 48 Cmd Pwd: /user/jlinoff/work/bash
 check quoted arguments
-2015-07-09 09:26:08.997199660 INFO test.sh 48 Cmd Status: 0
-2015-07-09 09:26:09.036231350 INFO test.sh 49 Cmd: sed 's/\(.\)$/\1xxx/'
-2015-07-09 09:26:09.064213266 INFO test.sh 49 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:30.373166504 INFO test.sh 48 Cmd Status: 0
+2015-07-09 09:42:30.399445928 INFO test.sh 49 Cmd: sed 's/\(.\)$/\1xxx/'
+2015-07-09 09:42:30.421552555 INFO test.sh 49 Cmd Pwd: /user/jlinoff/work/bash
 foo bar spamxxx
-2015-07-09 09:26:09.087067075 INFO test.sh 49 Cmd Time: elapsed=0:00.00, user=0.00, sys=0.00, mem=3504, in=0, out=8
-2015-07-09 09:26:09.110640523 INFO test.sh 49 Cmd Status: 0
-2015-07-09 09:26:09.133801330 ERROR test.sh 52 Assertion failed: (( 1 == 2 )).
+2015-07-09 09:42:30.461670743 INFO test.sh 49 Cmd Time: elapsed=0:00.00, user=0.00, sys=0.00, mem=3504, in=0, out=8
+2015-07-09 09:42:30.509962634 INFO test.sh 49 Cmd Status: 0
+2015-07-09 09:42:30.549430805 ERROR test.sh 52 Assertion failed: (( 1 == 2 )).
 A1 does not contain 0
 A1 contains 1
 A1 contains 2
@@ -60,36 +60,38 @@ A1 contains foo
 A1 does not contain foobar
 A1 does not contain spambar
 A1 contains spam
-2015-07-09 09:26:09.159402155 INFO test.sh 79 Status=0
-2015-07-09 09:26:09.180846932 INFO test.sh 80 123456 = 34:17:36
-2015-07-09 09:26:09.203673484 INFO test.sh 83 Status=1
-2015-07-09 09:26:09.227699937 INFO test.sh 84 123456x = 123456x
-2015-07-09 09:26:09.249996827 INFO test.sh 88 Max=6
-2015-07-09 09:26:09.270935861 INFO test.sh 93 Min=1
-2015-07-09 09:26:09.292589386 INFO test.sh 97 Min=1
-2015-07-09 09:26:09.318222268 INFO test.sh 98 Max=7
-2015-07-09 09:26:09.345894689 INFO test.sh 105 Cmd: ex 23
-2015-07-09 09:26:09.370632054 INFO test.sh 105 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:30.603126508 INFO test.sh 79 Status=0
+2015-07-09 09:42:30.648478662 INFO test.sh 80 123456 = 34:17:36
+2015-07-09 09:42:30.695918990 INFO test.sh 83 Status=1
+2015-07-09 09:42:30.755539581 INFO test.sh 84 123456x = 123456x
+2015-07-09 09:42:30.826928739 INFO test.sh 88 Max=6
+2015-07-09 09:42:30.900744860 INFO test.sh 93 Min=1
+2015-07-09 09:42:30.937577560 INFO test.sh 97 Min=1
+2015-07-09 09:42:30.960731266 INFO test.sh 98 Max=7
+2015-07-09 09:42:30.984337170 INFO test.sh 105 Cmd: ex 23
+2015-07-09 09:42:31.011317567 INFO test.sh 105 Cmd Pwd: /user/jlinoff/work/bash
 return code: 23
-2015-07-09 09:26:09.396278912 INFO test.sh 105 Cmd Status: 23
-2015-07-09 09:26:09.424641893 INFO test.sh 106 Exit status = 23
-2015-07-09 09:26:09.457271029 INFO test.sh 109 Cmd: ex 1
-2015-07-09 09:26:09.481941648 INFO test.sh 109 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:31.043603844 INFO test.sh 105 Cmd Status: 23
+2015-07-09 09:42:31.079458756 WARNING test.sh 105 Command failed with exit status 23: ex 23
+2015-07-09 09:42:31.116752207 INFO test.sh 106 Exit status = 23
+2015-07-09 09:42:31.153750420 INFO test.sh 109 Cmd: ex 1
+2015-07-09 09:42:31.190131193 INFO test.sh 109 Cmd Pwd: /user/jlinoff/work/bash
 return code: 1
-2015-07-09 09:26:09.506389131 INFO test.sh 109 Cmd Status: 1
-2015-07-09 09:26:09.538806072 INFO test.sh 112 Cmd: echo "foo bar" | sed -e 's/bar/spam/'
-2015-07-09 09:26:09.566574643 INFO test.sh 112 Cmd Pwd: /user/jlinoff/work/bash
+2015-07-09 09:42:31.252813098 INFO test.sh 109 Cmd Status: 1
+2015-07-09 09:42:31.312328095 WARNING test.sh 109 Command failed with exit status 1: ex 1
+2015-07-09 09:42:31.382480923 INFO test.sh 112 Cmd: echo "foo bar" | sed -e 's/bar/spam/'
+2015-07-09 09:42:31.428541738 INFO test.sh 112 Cmd Pwd: /user/jlinoff/work/bash
 foo spam
-2015-07-09 09:26:09.594811608 INFO test.sh 112 Cmd Status: 0
-2015-07-09 09:26:09.621335397 INFO test.sh 117 MyStack = 3 elements
+2015-07-09 09:42:31.483419286 INFO test.sh 112 Cmd Status: 0
+2015-07-09 09:42:31.533710800 INFO test.sh 117 MyStack = 3 elements
 MyStack=(1 2 3)
-2015-07-09 09:26:09.649469649 INFO test.sh 121 Top=3
-2015-07-09 09:26:09.674037090 INFO test.sh 122 MyStack = 3 elements
+2015-07-09 09:42:31.568239312 INFO test.sh 121 Top=3
+2015-07-09 09:42:31.606318467 INFO test.sh 122 MyStack = 3 elements
 MyStack=(1 2 3)
-2015-07-09 09:26:09.706068114 INFO test.sh 126 Top=3
-2015-07-09 09:26:09.733582605 INFO test.sh 127 MyStack = 2 elements
+2015-07-09 09:42:31.655474015 INFO test.sh 126 Top=3
+2015-07-09 09:42:31.698133651 INFO test.sh 127 MyStack = 2 elements
 MyStack=(1 2)
-2015-07-09 09:26:09.766943052 INFO test.sh 133 4
-2015-07-09 09:26:09.795198483 INFO test.sh 133 3
-2015-07-09 09:26:09.822574458 INFO test.sh 133 2
-2015-07-09 09:26:09.849125240 INFO test.sh 133 1
+2015-07-09 09:42:31.739268253 INFO test.sh 133 4
+2015-07-09 09:42:31.783632299 INFO test.sh 133 3
+2015-07-09 09:42:31.846384695 INFO test.sh 133 2
+2015-07-09 09:42:31.931183042 INFO test.sh 133 1
