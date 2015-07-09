@@ -343,6 +343,9 @@ function utilsExecNoExit() {
         utilsInfo "Cmd Status: $Status"
     fi
     
+    if (( $Status )) ; then
+        utilsWarn "Command failed with exit status ${Status}: $Cmd"
+    fi
     return $Status
 }
 
