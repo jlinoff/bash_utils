@@ -125,7 +125,7 @@ utilsInfo "test message"
 # Useful format for scrips that source all sorts of different things.
 utilsMsgPrefixFormat='%date %time %type %file %line '
 utilsInfo "test message"
-# 2015-07-09 09:52:55.478262680 INFO /home/work/test/test123.sh 628 test message
+# 2015-07-09 09:52:55.478262680 INFO /home/jlinoff/work/test/test123.sh 628 test message
 
 # Another format.
 utilsMsgPrefixFormat='[%type] %date : '
