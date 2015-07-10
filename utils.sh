@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#
+# http://github.com/jlinoff/bash_utils
+#
 # This is a collection of general purpose bash functions for handling
 # certain low level functions like messages, assertions and command
 # monitoring. The available commands are:
