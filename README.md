@@ -1,7 +1,120 @@
 # bash_utils
 Collection of bash functions for handling low level functions like messages, command monitoring and assertions that use introspection to provide source file names and line numbers. The source code is useful for learning more about bash programming.
 
-## Commands
+## Why bother?
+Bash is a very powerful language, especially version 4 and beyond so why would you need a library like this?
+
+Well, you may not, especially if you are writing small, short lived tools for personal use.
+
+But one of the key features of this library is the ability to wrap commands using the ``utilsExec`` and ``utilsExecNoExit`` functions. Those functions were written with customer support in mind for complex, long lived scripts used by many people. They make field support much easier because the command wrapper functions provide the source line number, the command, the output and the
+status of each command.
+
+### Simple Example
+Consider the following simple example that opens up a port on the firewall using the Fedora/CentOS/RHEL firewall-cmd tool.
+
+```bash
+#!/bin/bash
+# We expect this to be run as root.
+firewall-cmd --zone=public --add-port=12021/tcp --permanent
+firewall-cmd --list-all --zone=public
+firewall-cmd --reload
+```
+
+### Check for valid users
+If this script is run by a user other than root, a permissions problem will arise. You can work around this by adding a prefix test to verify that the user is root like this.
+
+```bash
+#!/bin/bash
+# We expect this to be run as root.
+User=$(username)
+if [[ ! "$User" == "jlinoff" ]] ; then
+  echo "ERROR: this script can only be run by root"
+  exit 1
+fi
+firewall-cmd --zone=public --add-port=12021/tcp --permanent
+firewall-cmd --list-all --zone=public
+firewall-cmd --reload
+```
+
+Unfortunately, just checking for the user won't catch other errors, like an invalid option to the command.
+
+### Check for all errors using ``set -e``
+To catch all errors you can add ``set -e`` to automatically exit on error like this.
+
+> Note that you would typically add ``set -x`` as well to display the source code.
+
+```bash
+#!/bin/bash
+# We expect this to be run as root.
+set -e
+firewall-cmd --zone=public --add-port=12021/tcp --permanent
+firewall-cmd --list-all --zone=public
+firewall-cmd --reload
+```
+
+But if an error occurs, it might be hard to track down out which command failed, especially if there are a large number of commands and some of the commands (--list-all) are repeated.
+
+### Check for all errors by checking status
+To address that, you can check the return status of each command like this and add a unique message.
+
+```bash
+#!/bin/bash
+# We expect this to be run as root.
+firewall-cmd --zone=public --add-port=12021/tcp --permanent
+if (( $? )) ; then
+  echo "ERROR: add-port command failed.
+  exit 1
+fi
+firewall-cmd --list-all --zone=public
+if (( $? )) ; then
+  echo "ERROR: list command failed.
+  exit 1
+fi
+firewall-cmd --reload
+if (( $? )) ; then
+  echo "ERROR: reload command failed.
+  exit 1
+fi
+```
+### Using the function wrappers
+All of those approaches are perfectly fine when there are a small number of commands that need to be checked but for the cases where there are a large number of commands, it is much easier to wrap the commands like this and hide the details.
+
+```bash
+#!/bin/bash
+# We expect this to be run as root.
+source /opt/utils/bash_utils.sh
+utilsExec firewall-cmd --zone=public --add-port=12021/tcp --permanent
+utilsExec firewall-cmd --list-all --zone=public
+utilsExec firewall-cmd --reload
+```
+
+When a failure occurs using the wrappers, you are given the line number and the command which allows you to quickly find where the error occurred.
+
+Here is the actual output from running the above command as me.
+
+```
+$ cat -n x1.sh
+     1	#!/bin/bash
+     2	# We expect this to be run as root.
+     3	source /opt/utils/bash_utils.sh
+     4	utilsExec firewall-cmd --zone=public --add-port=12021/tcp --permanent
+     5	utilsExec firewall-cmd --list-all --zone=public
+     6	utilsExec firewall-cmd --reload
+$ ./x1.sh
+2017-02-25 08:39:23.076037467 INFO x1.sh 3 Cmd: firewall-cmd --zone=public --add-port=12021/tcp --permanent
+FirewallD is not running
+2017-02-25 08:39:23.514855174 ERROR x1.sh 3 Command failed with exit status 252: firewall-cmd --zone=public --add-port=12021/tcp --permanent
+```
+
+Note that this caught a completely unexpected error! The firewall was not even running (which is bad).
+
+### Other functions
+A number of the other commands like utilsErr, utilsInfo and so one are messaging functions that also provide context which, again, is useful for debugging.
+
+The rest are just things that i have found useful.
+
+## Table of Commands/Functions
+Here are the available functions/commands.
 
 | Command                     | Description                                 | Example |
 | --------------------------- | ------------------------------------------- | ------- |
