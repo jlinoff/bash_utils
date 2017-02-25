@@ -118,7 +118,7 @@ Here are the available functions/commands.
 
 | Command                     | Description                                 | Example |
 | --------------------------- | ------------------------------------------- | ------- |
-| utilsArrayContains          | Is element in array.                        | A=(1 2 3); if utilsArrayContains A 3 ; then echo "found" ; else echo "not found" ; fi |
+| utilsArrayContains          | Is element in a list.                       | A=(1 2 3); if utilsArrayContains A 3 ; then echo "found" ; else echo "not found" ; fi |
 | utilsAssert                 | Do an assertion test.                       | x=23; utilsAssert "(( $x == 23 ))" |
 | utilsConvertSecondsToHHMMSS | Convert total sectonds to HH:MM:SS          | x=12345; echo $(utilsConvertSecondsToHHMMSS $x) | 
 | utilsDebug                  | Prints a debug message.                     | utilsDebug "Debug message."        |
@@ -182,7 +182,7 @@ These are the global variables that control the operation of the
 utilities.
 
 | Global Variable      | Default | Description                                    |
-| -------------------- | ------- | ---------------------------------------------- |
+| -------------------- | :-----: | ---------------------------------------------- |
 | utilsDebugEnable     |    1    | enable/disable utilsDebug (DEBUG) messages     |
 | utilsErrEnable       |    1    | enable/disable utilsErr (ERROR) messages       |
 | utilsErrExitCode     |    1    | default utilsErr exit code                     |
